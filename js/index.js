@@ -1,3 +1,5 @@
+let forecast = [];
+
 gsap.from('.animation', {
   opacity: 0,
   duration: 1.4,
@@ -70,8 +72,6 @@ function getWeather(key) {
     .then((data) => data.json())
 
     .then((finalData) => {
-      console.log('finalData', finalData);
-
       if (finalData.cod === 200) {
         let result = document.getElementById('result');
         result.style.display = 'block';
@@ -79,6 +79,36 @@ function getWeather(key) {
         document.getElementById('description').innerHTML =
           finalData.weather[0].description;
         document.getElementById('pressure').innerHTML = finalData.main.pressure;
+        getForecast();
+      }
+      if (finalData.cod == 404) {
+        alert('city not found');
+      }
+      if (finalData.cod == 400) {
+        alert('Nothing to geocode');
+      }
+    });
+}
+
+function getForecast() {
+  let city = document.getElementById('city_input').value;
+  fetch(
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`,
+    {
+      method: 'get',
+    }
+  )
+    .then((data) => data.json())
+
+    .then((finalData) => {
+      forecast = [];
+      finalData.list.forEach((day) => {
+        forecast.push({ name: day.dt_txt, value: day.main.temp });
+      });
+      drawBarChartForeCast();
+
+      if (finalData.cod === 200) {
+        let result = document.getElementById('result');
       }
       if (finalData.cod == 404) {
         alert('city not found');
@@ -90,69 +120,67 @@ function getWeather(key) {
 }
 
 //drawing a chart for last 5 dayes temp
+function drawBarChartForeCast() {
+  d3.select('svg').remove();
 
-let arr = [
-  { name: 'ahmed', value: 30 },
-  { name: 'gamal', value: 8 },
-  { name: 'mustafa', value: 15 },
-  { name: 'saied', value: 16 },
-  { name: 'a', value: 23 },
-  { name: 'asdasd', value: 30 },
-];
+  let arr = forecast.slice(0, 8);
 
-var x = d3.scaleBand().rangeRound([0, '390']).padding(0.5),
-  y = d3.scaleLinear().rangeRound([200, 0]);
+  var x = d3.scaleBand().rangeRound([0, '390']).padding(0.63),
+    y = d3.scaleLinear().rangeRound([200, 0]);
 
-x.domain(
-  arr.map(function (d) {
-    return d.value;
-  })
-);
-y.domain([
-  0,
-  d3.max(arr, function (d) {
-    return d.value + 10;
-  }),
-]);
+  x.domain(
+    arr.map(function (d) {
+      return d.value;
+    })
+  );
+  y.domain([
+    0,
+    d3.max(arr, function (d) {
+      return d.value + 10;
+    }),
+  ]);
 
-var margin = { top: 10, right: 30, bottom: 50, left: 30 };
+  var margin = { top: 30, right: 30, bottom: 50, left: 30 };
 
-const container = d3
-  .select('svg')
-  .style('border', '1px solid red')
-  .attr('width', 390 + margin.right + margin.left)
-  .attr('height', 202 + margin.top + margin.bottom);
+  const container = d3
+    .select('body')
+    .append('svg')
+    .style('display', 'block')
+    .style('margin', '0 auto')
+    .attr('width', 390 + margin.right + margin.left)
+    .attr('height', 202 + margin.top + margin.bottom);
 
-container
-  .selectAll('div')
-  .data(arr)
-  .enter()
-  .append('rect')
-  .attr('fill', function (d) {
-    return 'rgb(255, 204, 0 )';
-  })
-  .attr('x', (data) => x(data.value))
-  .attr('y', (data) => y(data.value))
-  .attr('width', x.bandwidth())
-  .attr('height', (d) => 202 - y(d.value))
-  .append('text')
-  .text((d) => d.value);
+  container
+    .selectAll('div')
+    .data(arr)
+    .enter()
+    .append('rect')
+    .attr('fill', function (d) {
+      return 'rgb(255, 204, 0 )';
+    })
+    .attr('x', (data) => x(data.value))
+    .attr('y', (data) => y(data.value))
+    .attr('width', x.bandwidth())
+    .attr('height', (d) => 202 - y(d.value))
+    .append('text')
+    .text((d) => d.value);
 
-// add x ax label
-container
-  .append('text')
-  .attr('class', 'x label')
-  .attr('text-anchor', 'end')
-  .attr('x', 450)
-  .attr('y', 202)
-  .text('days');
+  // add x ax label
+  container
+    .append('text')
+    .attr('class', 'x label')
+    .attr('text-anchor', 'end')
+    .attr('x', 450)
+    .attr('y', 202)
+    .text('Temp');
 
-container
-  .append('g')
-  .attr('transform', 'translate(0,200)') // This controls the vertical position of the Axis
-  .call(d3.axisBottom(x));
+  container
+    .append('g')
+    .attr('transform', 'translate(0,200)') // This controls the vertical position of the Axis
+    .call(d3.axisBottom(x));
 
-container
-  .append('g')
-  .attr('transform', 'translate(20,0)') // This controls the vertical position of the Axis
-  .call(d3.axisLeft(y));
+  container
+    .append('g')
+    .attr('transform', 'translate(20,0)') // This controls the vertical position of the Axis
+    .call(d3.axisLeft(y));
+}
