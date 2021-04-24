@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/index.css" />
+    <title>Document</title>
+
+    <style>
+      body {
+        height: 100vh;
+      }
+      .container {
+        width: '600px';
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      id="sun"
+      width="100"
+      class="sun"
+      src="sun.svg"
+      alt="sun backgrond"
+      style="padding: 10px; margin: 30px"
+    />
+
+    <main>
+      <div class="content">
+        <img
+          width="100"
+          class="cloudy"
+          src="cloudy.svg"
+          alt="sun backgrond"
+          style="display: inline-flex"
+        />
+
+        <h1 class="animation">Weather website</h1>
+        <p class="animation_2">Getting the accurate weather</p>
+        <input
+          autofocus
+          id="city_input"
+          type="text"
+          placeholder="City Name, ex: Cairo"
+          class="weather"
+          style="
+            border: 1px solid #ecedee;
+            border-radius: 20px;
+            color: #3c4043;
+            font-family: arial, sans-serif;
+            font-size: 18px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 50%;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            text-align: left;
+          "
+        />
+        <br />
+        <button
+          id="get_weather_btn"
+          style="
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-family: arial, sans-serif;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 54px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+          "
+          onclick="getWeather()"
+        >
+          Search
+        </button>
+        <br />
+        <br />
+
+        <div id="result" style="display: flex; display: none">
+          <grid>
+            <span>Temp: </span>
+            <span id="temp">0</span>
+            <span>|</span>
+            <span id="description"> </span>
+            <span>|</span>
+            <span>pressure: </span>
+            <span id="pressure"> </span>
+          </grid>
+        </div>
+        <svg width="400" height="200"></svg>
+      </div>
+    </main>
+    <script src="https://d3js.org/d3.v6.min.js" defer></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+    <script src="https://d3js.org/d3-scale.v3.min.js" defer></script>
+    <script src="js/index.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+main {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  margin-top: -30px;
+}
+
+.content {
+  font-family: monospace;
+  font-size: xx-large;
+}
+
+.animation {
+  border: '1 sold red';
+}
+
+.weather {
+  width: '100%';
+}
