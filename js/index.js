@@ -100,12 +100,12 @@ let arr = [
   { name: 'asdasd', value: 30 },
 ];
 
-var x = d3.scaleBand().rangeRound([0, '402']).padding(0.1),
-  y = d3.scaleLinear().rangeRound([202, 0]);
+var x = d3.scaleBand().rangeRound([0, '390']).padding(0.5),
+  y = d3.scaleLinear().rangeRound([200, 0]);
 
 x.domain(
   arr.map(function (d) {
-    return d.name;
+    return d.value;
   })
 );
 y.domain([
@@ -115,11 +115,13 @@ y.domain([
   }),
 ]);
 
-// var container = d3.select('svg'),
-//   margin = { top: 10, right: 10, bottom: 15, left: 20 },
-//   width = +svg.attr('width') - margin.left - margin.right,
-//   height = +svg.attr('height') - margin.top - margin.bottom;
-const container = d3.select('svg').style('border', '1px solid red');
+var margin = { top: 10, right: 30, bottom: 50, left: 30 };
+
+const container = d3
+  .select('svg')
+  .style('border', '1px solid red')
+  .attr('width', 390 + margin.right + margin.left)
+  .attr('height', 202 + margin.top + margin.bottom);
 
 container
   .selectAll('div')
@@ -129,27 +131,28 @@ container
   .attr('fill', function (d) {
     return 'rgb(255, 204, 0 )';
   })
-  .attr('x', (data) => x(data.name))
+  .attr('x', (data) => x(data.value))
   .attr('y', (data) => y(data.value))
   .attr('width', x.bandwidth())
-  .attr('height', (d) => 202 - y(d.value));
+  .attr('height', (d) => 202 - y(d.value))
+  .append('text')
+  .text((d) => d.value);
 
-// //set the label
-// container
-//   .selectAll('text')
-//   .data(arr)
-//   .enter()
-//   .append('text')
-//   .text(function (d) {
-//     return d;
-//   })
-//   .attr('text-anchor', 'middle')
-//   //   .attr('x', function (d, i) {
-//   //     return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
-//   //   })
-//   //   .attr('y', function (d) {
-//   //     return h - d * 4 + 14;
-//   //   })
-//   .attr('font-family', 'sans-serif')
-//   .attr('font-size', '11px')
-//   .attr('fill', 'white');
+// add x ax label
+container
+  .append('text')
+  .attr('class', 'x label')
+  .attr('text-anchor', 'end')
+  .attr('x', 450)
+  .attr('y', 202)
+  .text('days');
+
+container
+  .append('g')
+  .attr('transform', 'translate(0,200)') // This controls the vertical position of the Axis
+  .call(d3.axisBottom(x));
+
+container
+  .append('g')
+  .attr('transform', 'translate(20,0)') // This controls the vertical position of the Axis
+  .call(d3.axisLeft(y));
