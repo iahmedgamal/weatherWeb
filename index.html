@@ -4,38 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/index.css" />
-    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css" media="screen" />
+    <title>Musala weather</title>
 
-    <style>
-      body {
-        height: 100vh;
-      }
-      .container {
-        width: '600px';
-      }
-    </style>
+    <style></style>
   </head>
   <body>
-    <img
-      id="sun"
-      width="100"
-      class="sun"
-      src="sun.svg"
-      alt="sun backgrond"
-      style="padding: 10px; margin: 30px"
-    />
-
+    <img id="sun" width="100" class="sun" src="sun.svg" alt="sun backgrond" />
     <main>
       <div class="content">
-        <img
-          width="100"
-          class="cloudy"
-          src="cloudy.svg"
-          alt="sun backgrond"
-          style="display: inline-flex"
-        />
-
+        <img width="100" class="cloudy" src="cloudy.svg" alt="sun backgrond" />
         <h1 class="animation">Weather website</h1>
         <p class="animation_2">Getting the accurate weather</p>
         <input
@@ -44,46 +22,9 @@
           type="text"
           placeholder="City Name, ex: Cairo"
           class="weather"
-          style="
-            border: 1px solid #ecedee;
-            border-radius: 20px;
-            color: #3c4043;
-            font-family: arial, sans-serif;
-            font-size: 18px;
-            margin: 11px 4px;
-            padding: 0 16px;
-            line-height: 27px;
-            height: 36px;
-            min-width: 50%;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-            text-align: left;
-          "
         />
         <br />
-        <button
-          id="get_weather_btn"
-          style="
-            background-color: #f8f9fa;
-            border: 1px solid #f8f9fa;
-            border-radius: 4px;
-            color: #3c4043;
-            font-family: arial, sans-serif;
-            font-size: 14px;
-            margin: 11px 4px;
-            padding: 0 16px;
-            line-height: 27px;
-            height: 36px;
-            min-width: 54px;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-          "
-          onclick="getWeather()"
-        >
-          Search
-        </button>
+        <button id="get_weather_btn" onclick="getWeather()">Search</button>
         <br />
         <br />
 
