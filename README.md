@@ -1,4 +1,4 @@
-# Heading 1 Weather website by using GSAP and D3.js
+# Weather website by using GSAP and D3.js for Musala soft
 
 api: https://openweathermap.org/api
 
